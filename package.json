@@ -1,0 +1,9 @@
+{
+  "name": "com.5pdev.menu-item-overrides",
+  "version": "1.0.0",
+  "displayName": "Menu Item Overrides",
+  "author": "5PDEV",
+  "dependencies": {
+    "com.5pdev.harmony-for-unity": "https://github.com/5PDEV/Harmony-For-Unity.git"
+  }
+}
