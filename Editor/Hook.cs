@@ -4,16 +4,15 @@ using UnityEngine;
 namespace MenuItemOverrides
 {
     [InitializeOnLoad]
-    [FilePath("Packages/MenuItemOverrides/Editor/Hook.asset", FilePathAttribute.Location.ProjectFolder)]
-    public class MenuItemHook : ScriptableSingleton<MenuItemHook>
+    internal class Hook : ScriptableSingleton<Hook>
     {
-        static MenuItemHook()
+        static Hook()
         {
-            MenuItemPatches.Patch();
-            
+            Patches.Patch();
+
             AssemblyReloadEvents.beforeAssemblyReload += () =>
             {
-                MenuItemPersistenceWindow window = CreateInstance<MenuItemPersistenceWindow>();
+                PersistenceWindow window = CreateInstance<PersistenceWindow>();
                 window.minSize = window.maxSize = Vector2.zero;
                 window.ShowTab();
                 window.position = new Rect(100000, 100000, 0, 0);
@@ -22,7 +21,7 @@ namespace MenuItemOverrides
 
             AssemblyReloadEvents.afterAssemblyReload += () =>
             {
-                MenuItemPersistenceWindow window = EditorWindow.GetWindow<MenuItemPersistenceWindow>();
+                PersistenceWindow window = EditorWindow.GetWindow<PersistenceWindow>();
                 if (window) window.Close();
             };
         }

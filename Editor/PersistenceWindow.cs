@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace MenuItemOverrides
 {
-    public class MenuItemPersistenceWindow : EditorWindow
+    internal class PersistenceWindow : EditorWindow
     {
         public Object Target { get; set; }
 
         private void OnGUI()
         {
-            MenuItemHook target = Target as MenuItemHook;
+            Hook target = Target as Hook;
             if (!target) return;
             target!.hideFlags = target.hideFlags;
         }
