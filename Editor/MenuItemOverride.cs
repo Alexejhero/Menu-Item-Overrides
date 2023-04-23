@@ -40,7 +40,8 @@ namespace MenuItemOverrides
                 hide = bool.Parse(splits[1]),
                 overridePath = bool.Parse(splits[2]),
                 overridePriority = bool.Parse(splits[3]),
-                newPriority = int.Parse(splits[4])
+                newPriority = int.Parse(splits[4]),
+                relativeOffset = bool.Parse(splits[5])
             };
         }
 
