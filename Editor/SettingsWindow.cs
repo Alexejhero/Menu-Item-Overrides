@@ -160,7 +160,7 @@ namespace MenuItemOverrides
                     }
                 }
 
-                item.originalPath = EditorGUILayout.TextField(item.originalPath, GUILayout.MinWidth(50));
+                item.originalPath = TextFieldWithPlaceholder(item.originalPath, "AnnoyingPackage/", item.GetHashCode() + "_old", GUILayout.MinWidth(50)).Trim();
 
                 using (new EditorGUI.DisabledScope(true))
                 {
@@ -189,29 +189,25 @@ namespace MenuItemOverrides
                 item.overridePath = EditorGUILayout.ToggleLeft("Override Path", item.overridePath, GUILayout.MaxWidth(150));
                 using (new EditorGUI.DisabledScope(!item.overridePath))
                 {
-                    item.newPath = EditorGUILayout.TextField(item.newPath);
-                    if (item.overridePath)
-                    {
-                        if (item.IsCategory != item.newPath.EndsWith("/"))
-                        {
-                            using (new EditorGUI.DisabledScope(true))
-                            {
-                                GUIContent originalCategoryContent = new("!", "New path must end with '/' in order to be applied to an entire submenu.");
-                                GUIContent originalItemContent = new("!", "New path must not end with '/' in order to be applied to a single item.");
+                    item.newPath = TextFieldWithPlaceholder(item.newPath, "Tools/LessAnnoyingPackage/", item.GetHashCode() + "_new").Trim();
+                    if (!item.overridePath || item.IsCategory == item.newPath.EndsWith("/")) return;
 
-                                Color backgroundColor = GUI.backgroundColor;
-                                GUI.backgroundColor = Color.red;
-                                GUILayout.Button(item.IsCategory ? originalCategoryContent : originalItemContent, new GUIStyle(GUI.skin.button)
-                                {
-                                    normal =
-                                    {
-                                        textColor = Color.white
-                                    },
-                                    fontStyle = FontStyle.Bold
-                                }, GUILayout.MaxWidth(25));
-                                GUI.backgroundColor = backgroundColor;
-                            }
-                        }
+                    using (new EditorGUI.DisabledScope(true))
+                    {
+                        GUIContent originalCategoryContent = new("!", "New path must end with '/' in order to be applied to an entire submenu.");
+                        GUIContent originalItemContent = new("!", "New path must not end with '/' in order to be applied to a single item.");
+
+                        Color backgroundColor = GUI.backgroundColor;
+                        GUI.backgroundColor = Color.red;
+                        GUILayout.Button(item.IsCategory ? originalCategoryContent : originalItemContent, new GUIStyle(GUI.skin.button)
+                        {
+                            normal =
+                            {
+                                textColor = Color.white
+                            },
+                            fontStyle = FontStyle.Bold
+                        }, GUILayout.MaxWidth(25));
+                        GUI.backgroundColor = backgroundColor;
                     }
                 }
             }
@@ -223,57 +219,82 @@ namespace MenuItemOverrides
             {
                 item.overridePriority = EditorGUILayout.ToggleLeft(item.IsCategory ? "Override Priorities" : "Override Priority", item.overridePriority, GUILayout.MaxWidth(150));
                 using (new EditorGUI.DisabledScope(!item.overridePriority))
+                using (new EditorGUILayout.HorizontalScope())
                 {
-                    using (new EditorGUILayout.HorizontalScope())
+                    if (item.IsCategory)
                     {
-                        if (item.IsCategory)
+                        GUILayout.Space(15);
+                        using (new EditorGUI.DisabledScope(true))
                         {
-                            GUILayout.Space(15);
-                            using (new EditorGUI.DisabledScope(true))
+                            GUILayout.Button(new GUIContent("+=", "Update submenu item priorities by adding an offset to their current values."), GUILayout.MaxWidth(25));
+                        }
+
+                        GUILayout.Space(-20);
+
+                        item.newPriority = EditorGUILayout.IntField(item.newPriority);
+
+                        using (new EditorGUI.DisabledScope(true))
+                        {
+                            GUIContent content = new("!", "Modifying priority offsets for submenus will only take effect once the editor has been restarted or the submenu has been moved, or hidden and unhidden.");
+
+                            Color backgroundColor = GUI.backgroundColor;
+                            GUI.backgroundColor = Color.yellow;
+                            GUILayout.Button(content, new GUIStyle(GUI.skin.button)
                             {
-                                GUILayout.Button(new GUIContent("+=", "Update submenu item priorities by adding an offset to their current values."), GUILayout.MaxWidth(25));
-                            }
-                            GUILayout.Space(-20);
-
-                            item.newPriority = EditorGUILayout.IntField(item.newPriority);
-
-                            using (new EditorGUI.DisabledScope(true))
-                            {
-                                GUIContent content = new("!", "Modifying priority offsets for submenus will only take effect once the editor has been restarted.");
-
-                                Color backgroundColor = GUI.backgroundColor;
-                                GUI.backgroundColor = Color.yellow;
-                                GUILayout.Button(content, new GUIStyle(GUI.skin.button)
+                                normal =
                                 {
-                                    normal =
-                                    {
-                                        textColor = Color.white
-                                    },
-                                    fontStyle = FontStyle.Bold
-                                }, GUILayout.MaxWidth(25));
-                                GUI.backgroundColor = backgroundColor;
-                            }
+                                    textColor = Color.white
+                                },
+                                fontStyle = FontStyle.Bold
+                            }, GUILayout.MaxWidth(25));
+                            GUI.backgroundColor = backgroundColor;
+                        }
+                    }
+                    else
+                    {
+                        GUILayout.Space(15);
+                        if (item.relativeOffset)
+                        {
+                            bool change = GUILayout.Button(new GUIContent("+=", "Update item priority by adding an offset to it. Click to change behaviour."), GUILayout.MaxWidth(25));
+                            if (change) item.relativeOffset = false;
                         }
                         else
                         {
-                            GUILayout.Space(15);
-                            if (item.relativeOffset)
-                            {
-                                bool change = GUILayout.Button(new GUIContent("+=", "Update item priority by adding an offset to it. Click to change behaviour."), GUILayout.MaxWidth(25));
-                                if (change) item.relativeOffset = false;
-                            }
-                            else
-                            {
-                                bool change = GUILayout.Button(new GUIContent("=", "Update item priority by overriding it entirely. Click to change behaviour."), GUILayout.MaxWidth(25));
-                                if (change) item.relativeOffset = true;
-                            }
-                            GUILayout.Space(-20);
-
-                            item.newPriority = EditorGUILayout.IntField(item.newPriority);
+                            bool change = GUILayout.Button(new GUIContent("=", "Update item priority by overriding it entirely. Click to change behaviour."), GUILayout.MaxWidth(25));
+                            if (change) item.relativeOffset = true;
                         }
+
+                        GUILayout.Space(-20);
+
+                        item.newPriority = EditorGUILayout.IntField(item.newPriority);
                     }
                 }
             }
+        }
+
+        private string TextFieldWithPlaceholder(string text, string placeholder, string controlId, params GUILayoutOption[] options)
+        {
+            GUIStyle placeholderStyle = new GUIStyle(EditorStyles.textField);
+            placeholderStyle.normal.textColor = Color.gray;
+            placeholderStyle.hover.textColor = Color.gray;
+
+            bool focused = EditorGUIUtility.editingTextField && GUI.GetNameOfFocusedControl().StartsWith(controlId);
+            bool previouslyUnfocused = focused && GUI.GetNameOfFocusedControl().EndsWith("_prev");
+
+            if (string.IsNullOrEmpty(text) && !focused)
+            {
+                GUI.SetNextControlName(controlId + "_prev");
+                EditorGUILayout.TextField(placeholder, placeholderStyle, options);
+            }
+            else
+            {
+                if (previouslyUnfocused) EditorGUI.FocusTextInControl(controlId);
+                GUI.SetNextControlName(controlId);
+                text = EditorGUILayout.TextField(text, options);
+                if (previouslyUnfocused) EditorGUI.FocusTextInControl(controlId);
+            }
+
+            return text;
         }
     }
 }
