@@ -16,10 +16,13 @@ namespace MenuItemOverrides
 
         private Vector2 _scrollPosition = Vector2.zero;
 
+        private bool _debugMode = false;
+
         private void OnEnable()
         {
             _saved = Config.LoadPrefs();
             _edited = new List<MenuItemOverride>(_saved);
+            _debugMode = EditorConfig.DebugEnabled;
         }
 
         [MenuItem("Tools/Menu Item Overrides/Configuration", priority = -1000)]
@@ -37,86 +40,103 @@ namespace MenuItemOverrides
 
         private void OnGUI()
         {
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(10);
-            EditorGUILayout.BeginVertical();
-
-            GUILayout.Label(" Menu Item Overrides", new GUIStyle(GUI.skin.label)
+            using (new EditorGUILayout.HorizontalScope())
             {
-                fontStyle = FontStyle.Bold,
-                fixedHeight = 22,
-                fontSize = 14
-            });
-
-            GUILayout.Space(10);
-
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-
-            for (int i = 0; i < _edited.Count; i++)
-            {
-                MenuItemOverride o = _edited[i];
-
-                switch (o.flag)
+                GUILayout.Space(10);
+                using (new EditorGUILayout.VerticalScope())
                 {
-                    case MenuItemOverride.OperationFlag.MoveUp:
-                        _edited.RemoveAt(i);
-                        _edited.Insert(i - 1, o);
-                        break;
-                    case MenuItemOverride.OperationFlag.MoveDown:
-                        _edited.RemoveAt(i);
-                        _edited.Insert(i + 1, o);
-                        break;
-                    case MenuItemOverride.OperationFlag.Remove:
-                        _edited.RemoveAt(i);
-                        i--;
-                        break;
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        GUILayout.Label(" Menu Item Overrides", new GUIStyle(GUI.skin.label)
+                        {
+                            fontStyle = FontStyle.Bold,
+                            fixedHeight = 22,
+                            fontSize = 14
+                        });
+
+                        GUILayout.FlexibleSpace();
+
+                        _debugMode = GUILayout.Toggle(_debugMode, new GUIContent("Debug Mode", "Append priorities to the menu item paths"));
+                    }
+
+                    GUILayout.Space(10);
+
+                    using (EditorGUILayout.ScrollViewScope scrollView = new(_scrollPosition))
+                    {
+                        _scrollPosition = scrollView.scrollPosition;
+
+                        for (int i = 0; i < _edited.Count; i++)
+                        {
+                            MenuItemOverride o = _edited[i];
+
+                            switch (o.flag)
+                            {
+                                case MenuItemOverride.OperationFlag.MoveUp:
+                                    _edited.RemoveAt(i);
+                                    _edited.Insert(i - 1, o);
+                                    break;
+                                case MenuItemOverride.OperationFlag.MoveDown:
+                                    _edited.RemoveAt(i);
+                                    _edited.Insert(i + 1, o);
+                                    break;
+                                case MenuItemOverride.OperationFlag.Remove:
+                                    _edited.RemoveAt(i);
+                                    i--;
+                                    break;
+                            }
+
+                            o.flag = MenuItemOverride.OperationFlag.None;
+                        }
+
+                        for (int index = 0; index < _edited.Count; index++)
+                        {
+                            MenuItemOverride o = _edited[index];
+                            DrawItem(o, index);
+                        }
+
+                        if (GUILayout.Button("Add"))
+                        {
+                            GUI.FocusControl(null);
+                            _edited.Add(new MenuItemOverride());
+                        }
+
+                        GUILayout.Space(10);
+                    }
+
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        if (GUILayout.Button("Reset"))
+                        {
+                            GUI.FocusControl(null);
+                            _saved = Config.LoadPrefs();
+                            _edited = new List<MenuItemOverride>(_saved);
+                            _debugMode = EditorConfig.DebugEnabled;
+                        }
+
+                        if (GUILayout.Button("Save"))
+                        {
+                            GUI.FocusControl(null);
+                            _saved = new List<MenuItemOverride>(_edited);
+                            Config.SavePrefs(_saved);
+                            EditorConfig.DebugEnabled = _debugMode;
+                        }
+
+                        if (GUILayout.Button("Save and Reload"))
+                        {
+                            GUI.FocusControl(null);
+                            _saved = new List<MenuItemOverride>(_edited);
+                            Config.SavePrefs(_saved);
+                            EditorConfig.DebugEnabled = _debugMode;
+
+                            EditorUtility.RequestScriptReload();
+                        }
+                    }
+
+                    GUILayout.Space(10);
                 }
 
-                o.flag = MenuItemOverride.OperationFlag.None;
+                GUILayout.Space(10);
             }
-
-            for (int index = 0; index < _edited.Count; index++)
-            {
-                MenuItemOverride o = _edited[index];
-                DrawItem(o, index);
-            }
-
-            if (GUILayout.Button("Add"))
-            {
-                GUI.FocusControl(null);
-                _edited.Add(new MenuItemOverride());
-            }
-
-            GUILayout.Space(10);
-            EditorGUILayout.EndScrollView();
-
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Reset"))
-            {
-                GUI.FocusControl(null);
-                _saved = Config.LoadPrefs();
-                _edited = new List<MenuItemOverride>(_saved);
-            }
-            if (GUILayout.Button("Save"))
-            {
-                GUI.FocusControl(null);
-                _saved = new List<MenuItemOverride>(_edited);
-                Config.SavePrefs(_saved);
-            }
-            if (GUILayout.Button("Save and Reload"))
-            {
-                GUI.FocusControl(null);
-                _saved = new List<MenuItemOverride>(_edited);
-                Config.SavePrefs(_saved);
-
-                EditorUtility.RequestScriptReload();
-            }
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(10);
-
-            EditorGUILayout.EndVertical();
-            GUILayout.Space(10);
-            EditorGUILayout.EndHorizontal();
         }
 
         private void DrawItem(MenuItemOverride item, int index)

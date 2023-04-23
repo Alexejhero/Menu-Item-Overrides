@@ -64,6 +64,8 @@ namespace MenuItemOverrides
                     if (o.overridePriority) item.priority = (o.relativeOffset ? item.priority : 0) + o.newPriority;
                 }
             }
+
+            if (EditorConfig.DebugEnabled) item.menuItem += $" ({item.priority})";
         }
     }
 }

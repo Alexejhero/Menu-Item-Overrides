@@ -6,13 +6,21 @@ Don't you just hate it when you install a few assets or packages and  then your 
 
 ![](https://i.imgur.com/X7ipc.png)
 
-Looks pretty comparable to me.
+Looks pretty comparable to us.
 
-**Well I have just the solution for you!**
+**Well we have just the solution for you!**
 
 With this package, you can turn that 👆 into this 👇!
 
 ![](images~/header-after.png)
+
+## Installation
+
+TBA
+
+## Dependencies
+
+TBA
 
 ## Configuration
 
@@ -32,13 +40,10 @@ This window allows you to add a list of overrides for menu items, which can modi
 ![](images~/example-1.png)
 ![](images~/example-2.png)
 
-## Dependencies
+### Additional features
 
-TBA
-
-## Installation
-
-TBA
+- You can use the `Debug Mode` toggle to append the priorities of each item to the end of their path, so you can better see how to modify them. (This is not present in any of the above screenshots because we took them before we added this feature, but we think you can find the button on your own 🙂)
+- By going to `Tools/Menu Item Overrides/See Report...` you can see a list of all of the menu items and their priorities _before_ they were modified by this package.
 
 ## Known issues
 
