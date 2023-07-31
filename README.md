@@ -12,11 +12,20 @@ With this package, you can turn that 👆 into this 👇!
 
 ## Installation
 
-TBA
+1. Open the Package Manager from Window > Package Manager
+2. "+" button > Add package from git URL
+3. Enter the following
+https://github.com/5PDEV/Menu-Item-Overrides.git?path=/Assets/MenuItemOverrides
 
-## Dependencies
+Or, open Packages/manifest.json and add the following to the dependencies block.
 
-TBA
+```json
+{
+    "dependencies": {
+      "jp.co.cyberagent.smartaddresser": "https://github.com/CyberAgentGameEntertainment/SmartAddresser.git?path=/Assets/SmartAddresser"
+    }
+}
+```
 
 ## Configuration
 
