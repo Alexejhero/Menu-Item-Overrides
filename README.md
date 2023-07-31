@@ -1,6 +1,6 @@
 > **Warning**  
-> This project is barebones. It was originally meant for personal use but we thought we should release it for everyone. You may encounter issues and/or unpolished features.  
-> Feel free to open an issue on GitHub if you have something to share, we use this package constantly within our development team so we are actively maintaining it.
+> This project is barebones. It was originally meant for personal use but we thought we should release it for everyone.
+> Feel free to open an issue or PR if you find an issue or want to contribute, we use this package constantly within our development team so we are actively maintaining it.
 
 
 # Menu Item Overrides
