@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ namespace MenuItemOverrides
 {
     internal static class Config
     {
+        private static string ConfigParentPath => Path.Combine("ProjectSettings", "Packages");
         private static string ConfigPath => Path.Combine("ProjectSettings", "Packages", "MenuItemOverrides.txt");
 
         public static void SavePrefs(IEnumerable<MenuItemOverride> overrides)
@@ -23,7 +25,13 @@ namespace MenuItemOverrides
 
         public static List<MenuItemOverride> LoadPrefs()
         {
-            if (!File.Exists(ConfigPath)) File.WriteAllText(ConfigPath, "");
+            string configParentPath = ConfigParentPath;
+            string configPath = ConfigPath;
+
+            if (File.Exists(configParentPath)) throw new Exception("ProjectSettings/Packages must be a directory but it is a file");
+            if (!Directory.Exists(configParentPath)) Directory.CreateDirectory(configParentPath);
+
+            if (!File.Exists(configPath)) File.WriteAllText(configPath, "");
 
             List<MenuItemOverride> overrides = new();
 

@@ -1,3 +1,8 @@
+> **Warning**  
+> This project is barebones. It was originally meant for personal use but we thought we should release it for everyone. You may encounter issues and/or unpolished features.  
+> Feel free to open an issue on GitHub if you have something to share, we use this package constantly within our development team so we are actively maintaining it.
+
+
 # Menu Item Overrides
 
 Don't you just hate it when you install a few assets or packages and  then your menu ends up looking like one of those old Internet Explorer installations with like 20 toolbar extensions?
@@ -22,10 +27,13 @@ Or, open Packages/manifest.json and add the following to the dependencies block.
 ```json
 {
     "dependencies": {
-      "jp.co.cyberagent.smartaddresser": "https://github.com/CyberAgentGameEntertainment/SmartAddresser.git?path=/Assets/SmartAddresser"
+      "com.5pdev.menu-item-overrides": "https://github.com/5PDEV/Menu-Item-Overrides.git?path=/Assets/MenuItemOverrides"
     }
 }
 ```
+
+> **Warning**  
+> Menu Item Overrides depends on [HarmonyX](https://github.com/BepInEx/HarmonyX), and comes bundled with some precompiled dependencies. If you already have some of these plugins installed in your project and they are conflicting, set the `MENU_ITEM_OVERRIDES_DISABLE_DEPENDENCIES` flag in your editor settings. (you will need to manually install the missing dependencies)
 
 ## Configuration
 
@@ -47,8 +55,10 @@ This window allows you to add a list of overrides for menu items, which can modi
 
 ### Additional features
 
-- You can use the `Debug Mode` toggle to append the priorities of each item to the end of their path, so you can better see how to modify them. (This is not present in any of the above screenshots because we took them before we added this feature, but we think you can find the button on your own 🙂)
+- You can use the `Debug Mode` toggle to append the priorities of each item to the end of their path, so you can better see how to modify them. (This is not present in any of the above screenshots because we took them before we added this feature, but it's in the top right)
 - By going to `Tools/Menu Item Overrides/See Report...` you can see a list of all of the menu items and their priorities _before_ they were modified by this package.
+
+
 
 ### Limitations
 
@@ -56,8 +66,10 @@ Only menu items created with the `[MenuItem]` attribute can be modified. built-i
 
 ## Known issues
 
-- Submenus seem to somehow be cached, so changing the priority override of a submenu will only take effect if the editor is restarted or if the submenu is moved, or hidden and unhidden.
 - When installing or uninstalling the package the assemblies will not be refreshed, so the menu items will not be updated.
+- Submenus seem to somehow be cached. This affects the following:
+  - Changing the priority of an entire submenu will only take effect if the editor is restarted or if the submenu is moved, or hidden and unhidden.
+  - Removing an entire submenu and replacing it with a single item will make the editor behave weirdly, if you really want to do that you can include a ZWSP at the end of the name for the single item
 
 ## Getting involved
 
