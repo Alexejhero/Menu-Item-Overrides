@@ -45,9 +45,14 @@ This window allows you to add a list of overrides for menu items, which can modi
 - You can use the `Debug Mode` toggle to append the priorities of each item to the end of their path, so you can better see how to modify them. (This is not present in any of the above screenshots because we took them before we added this feature, but we think you can find the button on your own 🙂)
 - By going to `Tools/Menu Item Overrides/See Report...` you can see a list of all of the menu items and their priorities _before_ they were modified by this package.
 
+### Limitations
+
+Only menu items created with the `[MenuItem]` attribute can be modified. built-in menu items cannot be modified 
+
 ## Known issues
 
-Submenus seem to somehow be cached, so changing the priority override of a submenu will only take effect if the editor is restarted or if the submenu is moved, or hidden and unhidden.
+- Submenus seem to somehow be cached, so changing the priority override of a submenu will only take effect if the editor is restarted or if the submenu is moved, or hidden and unhidden.
+- When installing or uninstalling the package the assemblies will not be refreshed, so the menu items will not be updated.
 
 ## Getting involved
 
