@@ -3,8 +3,5 @@
   "version": "1.0.0",
   "displayName": "Menu Item Overrides",
   "author": "5PDEV",
-  "license": "LGPL-2.1-only",
-  "dependencies": {
-    "org.nuget.harmonyx": "2.10.1"
-  }
+  "license": "LGPL-2.1-only"
 }
