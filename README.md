@@ -2,17 +2,13 @@
 
 Don't you just hate it when you install a few assets or packages and  then your menu ends up looking like one of those old Internet Explorer installations with like 20 toolbar extensions?
 
-![](images~/header-before.png)
-
-![](https://i.imgur.com/X7ipc.png)
-
-Looks pretty comparable to us.
+![](.github/images/header-before.png)
 
 **Well we have just the solution for you!**
 
 With this package, you can turn that 👆 into this 👇!
 
-![](images~/header-after.png)
+![](.github/images/header-after.png)
 
 ## Installation
 
@@ -28,7 +24,7 @@ With the package installed, you can open the Menu Item Overrides window by using
 
 This window allows you to add a list of overrides for menu items, which can modify the path of the menu item, the priority, or both.
 
-![](images~/window.png)
+![](.github/images/window.png)
 
 - By pressing the `H` button, you can hide the menu item entirely.
 - By enabling `Override Path`, you can specify a new location for the menu item.
@@ -37,8 +33,8 @@ This window allows you to add a list of overrides for menu items, which can modi
 
 **Overrides are applied top-to-bottom**, meaning that the following two setups are equivalent:
 
-![](images~/example-1.png)
-![](images~/example-2.png)
+![](.github/images/example-1.png)
+![](.github/images/example-2.png)
 
 ### Additional features
 
