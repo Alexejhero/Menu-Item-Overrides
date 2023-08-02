@@ -1,0 +1,5 @@
+MyAwesomeTool/
+Tools/MyAwesomeTool/
+,False,True,False,0,True
+
+

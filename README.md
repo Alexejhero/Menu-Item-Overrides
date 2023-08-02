@@ -5,7 +5,7 @@
 
 # Menu Item Overrides
 
-Don't you just hate it when you install a few assets or packages and  then your menu ends up looking like one of those old Internet Explorer installations with like 20 toolbar extensions?
+Don't you just hate it when you install a few assets or packages and then your menu ends up looking like one of those old Internet Explorer installations with like 20 toolbar extensions?
 
 ![](.github/images/header-before.png)
 
