@@ -1,7 +1,9 @@
 {
   "name": "com.5pdev.menu-item-overrides",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName": "Menu Item Overrides",
-  "author": "5PDEV",
-  "license": "LGPL-2.1-only"
+  "description": "Override menu items from other packages to move them or hide them.",
+  "author": "Alexejhero",
+  "license": "LGPL-2.1-only",
+  "repository": "https://github.com/Alexejhero/Menu-Item-Overrides"
 }

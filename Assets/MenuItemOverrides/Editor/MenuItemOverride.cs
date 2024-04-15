@@ -3,28 +3,28 @@ using System.Text;
 
 namespace MenuItemOverrides
 {
-    internal class MenuItemOverride
+    internal sealed class MenuItemOverride
     {
-        public string originalPath = "";
+        public string OriginalPath { get; set; } = "";
 
-        public bool hide;
+        public bool Hide { get; set; }
 
-        public bool overridePath;
-        public string newPath = "";
+        public bool OverridePath { get; set; }
+        public string NewPath { get; set; } = "";
 
-        public bool overridePriority;
-        public int newPriority;
-        public bool relativeOffset = true;
+        public bool OverridePriority { get; set; }
+        public int NewPriority { get; set; }
+        public bool RelativeOffset { get; set; } = true;
 
         public OperationFlag flag;
 
-        public bool IsCategory => originalPath.EndsWith("/");
+        public bool IsCategory => OriginalPath.EndsWith("/");
 
         public void Serialize(StringBuilder sb)
         {
-            sb.AppendLine(originalPath);
-            sb.AppendLine(newPath);
-            sb.AppendLine($",{hide},{overridePath},{overridePriority},{newPriority},{relativeOffset}");
+            sb.AppendLine(OriginalPath);
+            sb.AppendLine(NewPath);
+            sb.AppendLine($",{Hide},{OverridePath},{OverridePriority},{NewPriority},{RelativeOffset}");
             sb.AppendLine();
             sb.AppendLine();
         }
@@ -35,13 +35,13 @@ namespace MenuItemOverrides
 
             return new MenuItemOverride
             {
-                originalPath = lines[0],
-                newPath = lines[1],
-                hide = bool.Parse(splits[1]),
-                overridePath = bool.Parse(splits[2]),
-                overridePriority = bool.Parse(splits[3]),
-                newPriority = int.Parse(splits[4]),
-                relativeOffset = bool.Parse(splits[5])
+                OriginalPath = lines[0],
+                NewPath = lines[1],
+                Hide = bool.Parse(splits[1]),
+                OverridePath = bool.Parse(splits[2]),
+                OverridePriority = bool.Parse(splits[3]),
+                NewPriority = int.Parse(splits[4]),
+                RelativeOffset = bool.Parse(splits[5])
             };
         }
 

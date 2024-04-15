@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MenuItemOverrides
 {
     [InitializeOnLoad]
-    internal class Hook : ScriptableSingleton<Hook>
+    internal sealed class Hook : ScriptableSingleton<Hook>
     {
         static Hook()
         {

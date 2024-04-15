@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MenuItemOverrides
 {
-    internal class PersistenceWindow : EditorWindow
+    internal sealed class PersistenceWindow : EditorWindow
     {
         public Object Target { get; set; }
 

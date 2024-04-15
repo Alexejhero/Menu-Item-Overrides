@@ -1,8 +1,3 @@
-> **Warning**  
-> This project is barebones. It was originally meant for personal use but we thought we should release it for everyone.
-> Feel free to open an issue or PR if you find an issue or want to contribute, we use this package constantly within our development team so we are actively maintaining it.
-
-
 # Menu Item Overrides
 
 Don't you just hate it when you install a few assets or packages and then your menu ends up looking like one of those old Internet Explorer installations with like 20 toolbar extensions?
@@ -33,7 +28,7 @@ Or, open Packages/manifest.json and add the following to the dependencies block.
 ```
 
 > **Warning**  
-> Menu Item Overrides depends on [HarmonyX](https://github.com/BepInEx/HarmonyX), and comes bundled with some precompiled dependencies. If you already have some of these plugins installed in your project and they are conflicting, set the `MENU_ITEM_OVERRIDES_DISABLE_DEPENDENCIES` flag in your editor settings. (you will need to manually install the missing dependencies)
+> Menu Item Overrides depends on [HarmonyX](https://github.com/BepInEx/HarmonyX), and comes bundled with some precompiled dependencies. If you already have some of these plugins installed in your project and they are conflicting, set the `MENU_ITEM_OVERRIDES_DISABLE_DEPENDENCIES` flag in your editor settings. (you will need to manually install the missing dependencies, if there are any)
 
 ## Configuration
 
@@ -56,7 +51,6 @@ This window allows you to add a list of overrides for menu items, which can modi
 ### Additional features
 
 - You can use the `Debug Mode` toggle to append the priorities of each item to the end of their path, so you can better see how to modify them. (This is not present in any of the above screenshots because we took them before we added this feature, but it's in the top right)
-- By going to `Tools/Menu Item Overrides/See Report...` you can see a list of all of the menu items and their priorities _before_ they were modified by this package.
 
 
 

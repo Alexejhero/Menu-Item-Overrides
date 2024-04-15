@@ -13,7 +13,7 @@ namespace MenuItemOverrides
 
         public static void SavePrefs(IEnumerable<MenuItemOverride> overrides)
         {
-            StringBuilder sb = new();
+            StringBuilder sb = new StringBuilder();
 
             foreach (MenuItemOverride o in overrides)
             {
@@ -33,7 +33,7 @@ namespace MenuItemOverrides
 
             if (!File.Exists(configPath)) File.WriteAllText(configPath, "");
 
-            List<MenuItemOverride> overrides = new();
+            List<MenuItemOverride> overrides = new List<MenuItemOverride>();
 
             try
             {
