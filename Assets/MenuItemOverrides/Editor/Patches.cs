@@ -10,12 +10,12 @@ namespace MenuItemOverrides
     {
         private static List<MenuItemOverride> _overrides;
 
-        public static HashSet<string> report;
+        public static HashSet<string> Report;
 
         public static void Patch()
         {
             _overrides = Config.LoadPrefs();
-            report = new HashSet<string>();
+            Report = new HashSet<string>();
 
             Harmony harmony = new(nameof(MenuItemOverrides));
 
@@ -37,31 +37,31 @@ namespace MenuItemOverrides
 
         private static void UpdateMenuItem(MenuItem item)
         {
-            report.Add($"{item.menuItem}, {item.priority}");
+            Report.Add($"{item.menuItem}, {item.priority}");
 
             foreach (MenuItemOverride o in _overrides)
             {
                 if (o.IsCategory)
                 {
-                    if (!item.menuItem.StartsWith(o.originalPath)) continue;
+                    if (!item.menuItem.StartsWith(o.OriginalPath)) continue;
 
-                    if (o.hide) item.menuItem = "CONTEXT/MenuItemHidden/" + item.menuItem;
-                    else if (o.overridePath && o.newPath.EndsWith("/"))
+                    if (o.Hide) item.menuItem = "CONTEXT/MenuItemHidden/" + item.menuItem;
+                    else if (o.OverridePath && o.NewPath.EndsWith("/"))
                     {
-                        int index = item.menuItem.IndexOf(o.originalPath, StringComparison.Ordinal);
-                        item.menuItem = item.menuItem[..index] + o.newPath + item.menuItem[(index + o.originalPath.Length)..];
+                        int index = item.menuItem.IndexOf(o.OriginalPath, StringComparison.Ordinal);
+                        item.menuItem = item.menuItem[..index] + o.NewPath + item.menuItem[(index + o.OriginalPath.Length)..];
                     }
 
-                    if (o.overridePriority) item.priority += o.newPriority;
+                    if (o.OverridePriority) item.priority += o.NewPriority;
                 }
                 else
                 {
-                    if (item.menuItem != o.originalPath) continue;
+                    if (item.menuItem != o.OriginalPath) continue;
 
-                    if (o.hide) item.menuItem = "CONTEXT/MenuItemHidden/" + item.menuItem;
-                    else if (o.overridePath) item.menuItem = o.newPath;
+                    if (o.Hide) item.menuItem = "CONTEXT/MenuItemHidden/" + item.menuItem;
+                    else if (o.OverridePath) item.menuItem = o.NewPath;
 
-                    if (o.overridePriority) item.priority = (o.relativeOffset ? item.priority : 0) + o.newPriority;
+                    if (o.OverridePriority) item.priority = (o.RelativeOffset ? item.priority : 0) + o.NewPriority;
                 }
             }
 

@@ -34,7 +34,7 @@ namespace MenuItemOverrides
         [MenuItem("Tools/Menu Item Overrides/See Report...", priority = -999)]
         public static void SeeReport()
         {
-            File.WriteAllLines(ReportPath, Patches.report.OrderBy(a => a));
+            File.WriteAllLines(ReportPath, Patches.Report.OrderBy(a => a));
             Process.Start(ReportPath);
         }
 
@@ -69,7 +69,7 @@ namespace MenuItemOverrides
                         {
                             MenuItemOverride o = _edited[i];
 
-                            switch (o.flag)
+                            switch (o.Flag)
                             {
                                 case MenuItemOverride.OperationFlag.MoveUp:
                                     _edited.RemoveAt(i);
@@ -85,7 +85,7 @@ namespace MenuItemOverrides
                                     break;
                             }
 
-                            o.flag = MenuItemOverride.OperationFlag.None;
+                            o.Flag = MenuItemOverride.OperationFlag.None;
                         }
 
                         for (int index = 0; index < _edited.Count; index++)
@@ -145,7 +145,7 @@ namespace MenuItemOverrides
             {
                 DrawItemHeader(item, index);
 
-                if (!item.hide)
+                if (!item.Hide)
                 {
                     using (new EditorGUI.IndentLevelScope())
                     {
@@ -167,7 +167,7 @@ namespace MenuItemOverrides
                     if (GUILayout.Button("↑", GUILayout.MaxWidth(25)))
                     {
                         GUI.FocusControl(null);
-                        item.flag = MenuItemOverride.OperationFlag.MoveUp;
+                        item.Flag = MenuItemOverride.OperationFlag.MoveUp;
                     }
                 }
 
@@ -176,11 +176,11 @@ namespace MenuItemOverrides
                     if (GUILayout.Button("↓", GUILayout.MaxWidth(25)))
                     {
                         GUI.FocusControl(null);
-                        item.flag = MenuItemOverride.OperationFlag.MoveDown;
+                        item.Flag = MenuItemOverride.OperationFlag.MoveDown;
                     }
                 }
 
-                item.originalPath = TextFieldWithPlaceholder(item.originalPath, "AnnoyingPackage/", item.GetHashCode() + "_old", GUILayout.MinWidth(50)).Trim();
+                item.OriginalPath = TextFieldWithPlaceholder(item.OriginalPath, "AnnoyingPackage/", item.GetHashCode() + "_old", GUILayout.MinWidth(50)).Trim();
 
                 using (new EditorGUI.DisabledScope(true))
                 {
@@ -190,14 +190,14 @@ namespace MenuItemOverrides
                 }
 
                 GUIContent hideContent = new("H", "Completely hide this menu item");
-                item.hide = GUILayout.Toggle(item.hide, hideContent, GUI.skin.button, GUILayout.MaxWidth(25));
+                item.Hide = GUILayout.Toggle(item.Hide, hideContent, GUI.skin.button, GUILayout.MaxWidth(25));
 
                 GUILayout.Label("|", GUILayout.MaxWidth(7.2f));
 
                 if (GUILayout.Button(new GUIContent("X", "Remove override"), GUILayout.MaxWidth(25)))
                 {
                     GUI.FocusControl(null);
-                    item.flag = MenuItemOverride.OperationFlag.Remove;
+                    item.Flag = MenuItemOverride.OperationFlag.Remove;
                 }
             }
         }
@@ -206,11 +206,11 @@ namespace MenuItemOverrides
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                item.overridePath = EditorGUILayout.ToggleLeft("Override Path", item.overridePath, GUILayout.MaxWidth(150));
-                using (new EditorGUI.DisabledScope(!item.overridePath))
+                item.OverridePath = EditorGUILayout.ToggleLeft("Override Path", item.OverridePath, GUILayout.MaxWidth(150));
+                using (new EditorGUI.DisabledScope(!item.OverridePath))
                 {
-                    item.newPath = TextFieldWithPlaceholder(item.newPath, "Tools/LessAnnoyingPackage/", item.GetHashCode() + "_new").Trim();
-                    if (!item.overridePath || item.IsCategory == item.newPath.EndsWith("/")) return;
+                    item.NewPath = TextFieldWithPlaceholder(item.NewPath, "Tools/LessAnnoyingPackage/", item.GetHashCode() + "_new").Trim();
+                    if (!item.OverridePath || item.IsCategory == item.NewPath.EndsWith("/")) return;
 
                     using (new EditorGUI.DisabledScope(true))
                     {
@@ -237,8 +237,8 @@ namespace MenuItemOverrides
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                item.overridePriority = EditorGUILayout.ToggleLeft(item.IsCategory ? "Override Priorities" : "Override Priority", item.overridePriority, GUILayout.MaxWidth(150));
-                using (new EditorGUI.DisabledScope(!item.overridePriority))
+                item.OverridePriority = EditorGUILayout.ToggleLeft(item.IsCategory ? "Override Priorities" : "Override Priority", item.OverridePriority, GUILayout.MaxWidth(150));
+                using (new EditorGUI.DisabledScope(!item.OverridePriority))
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     if (item.IsCategory)
@@ -251,7 +251,7 @@ namespace MenuItemOverrides
 
                         GUILayout.Space(-20);
 
-                        item.newPriority = EditorGUILayout.IntField(item.newPriority);
+                        item.NewPriority = EditorGUILayout.IntField(item.NewPriority);
 
                         using (new EditorGUI.DisabledScope(true))
                         {
@@ -273,20 +273,20 @@ namespace MenuItemOverrides
                     else
                     {
                         GUILayout.Space(15);
-                        if (item.relativeOffset)
+                        if (item.RelativeOffset)
                         {
                             bool change = GUILayout.Button(new GUIContent("+=", "Update item priority by adding an offset to it. Click to change behaviour."), GUILayout.MaxWidth(25));
-                            if (change) item.relativeOffset = false;
+                            if (change) item.RelativeOffset = false;
                         }
                         else
                         {
                             bool change = GUILayout.Button(new GUIContent("=", "Update item priority by overriding it entirely. Click to change behaviour."), GUILayout.MaxWidth(25));
-                            if (change) item.relativeOffset = true;
+                            if (change) item.RelativeOffset = true;
                         }
 
                         GUILayout.Space(-20);
 
-                        item.newPriority = EditorGUILayout.IntField(item.newPriority);
+                        item.NewPriority = EditorGUILayout.IntField(item.NewPriority);
                     }
                 }
             }
