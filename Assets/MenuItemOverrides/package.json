@@ -1,7 +1,10 @@
 {
   "name": "com.5pdev.menu-item-overrides",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Menu Item Overrides",
   "author": "Alexejhero",
   "license": "MIT",
+  "dependencies": {
+    "com.unity.nuget.mono-cecil": "1.11.4"
+  }
 }
