@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "displayName": "Menu Item Overrides",
   "author": "Alexejhero",
+  "description": "Allows you to hide or move menu items in Unity, including those added by other packages.",
   "license": "MIT",
   "dependencies": {
     "com.unity.nuget.mono-cecil": "1.11.4"
